@@ -1,0 +1,30 @@
+pragma solidity >=0.7.0 <0.9.0;
+
+contract Voting {
+    address penyelenggara;
+
+    struct Calon {
+        string nama;
+        uint jumlahVote;
+    }
+    
+    Calon[] public namaCalon;
+
+    constructor (string[] memory namaKandidat) {
+        for (uint i=0; i < namaKandidat.length; i++) {
+           namaCalon.push(Calon(namaKandidat[i], 0)); 
+        }
+        
+    }
+
+    function tampilkanKandidat(uint indexKandidat) public view returns(string memory, uint) {
+        Calon memory kandidat = namaCalon[indexKandidat];
+        return(kandidat.nama, kandidat.jumlahVote);
+    }
+
+    function hitungKandidat() public view returns(uint) {
+        return namaCalon.length;
+    }
+
+
+}
