@@ -7,17 +7,19 @@ contract Voting {
         string nama;
         uint jumlahVote;
     }
+
+    mapping(address => bool) private pemilih;
     
-    Calon[] public namaCalon;
+    Calon[] private namaCalon;
 
     constructor (string[] memory namaKandidat) {
         for (uint i=0; i < namaKandidat.length; i++) {
            namaCalon.push(Calon(namaKandidat[i], 0)); 
         }
-        
     }
 
     function tampilkanKandidat(uint indexKandidat) public view returns(string memory, uint) {
+        require(indexKandidat < namaCalon.length, "Salah Nomor");
         Calon memory kandidat = namaCalon[indexKandidat];
         return(kandidat.nama, kandidat.jumlahVote);
     }
@@ -26,5 +28,10 @@ contract Voting {
         return namaCalon.length;
     }
 
-
+    function vote(uint indexKandidat) public {
+        require(indexKandidat < namaCalon.length, "Salah Nomor");
+        require(!pemilih[msg.sender], "Anda sudah memilih");
+        namaCalon[indexKandidat].jumlahVote++;
+        pemilih[msg.sender] = true;
+    }
 }
