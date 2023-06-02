@@ -16,6 +16,7 @@ contract Voting {
         for (uint i=0; i < namaKandidat.length; i++) {
            namaCalon.push(Calon(namaKandidat[i], 0)); 
         }
+        // namaCalon.push(Calon(namaKandidat, 0));
     }
 
     function tampilkanKandidat(uint indexKandidat) public view returns(string memory, uint) {
@@ -33,5 +34,9 @@ contract Voting {
         require(!pemilih[msg.sender], "Anda sudah memilih");
         namaCalon[indexKandidat].jumlahVote++;
         pemilih[msg.sender] = true;
+    }
+
+    function tambahKandidat(string memory inputKandidat) public {
+        namaCalon.push(Calon(inputKandidat, 0)); 
     }
 }
